@@ -1,0 +1,29 @@
+{
+  "name": "properly",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teamcharizard-epcj/Properly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teamcharizard-epcj/Properly/issues"
+  },
+  "homepage": "https://github.com/teamcharizard-epcj/Properly#readme",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.2.0",
+    "express": "^5.1.0",
+    "passport": "^0.7.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router": "^7.7.1",
+    "vite": "^7.0.6"
+  }
+}
