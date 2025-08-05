@@ -2,13 +2,13 @@ CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     userName VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    hashedPassword VARCHAR(255) NOT NULL,
+    hashed_password VARCHAR(255) NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS properties (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    propertyName VARCHAR(255) NOT NULL,
+    property_name VARCHAR(255) NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS tasks (
