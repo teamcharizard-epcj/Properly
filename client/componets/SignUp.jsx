@@ -44,7 +44,7 @@ export function SignUp() {
 
   return (
     <div className="loginSignUp">
-      <img src="client/assets/image_720-1.png.png" />
+      <img src="client/assets/properlyLogoH.svg" />
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Username</label>
         <input id="name" name="name" type="text" onChange={handleChange}></input>
