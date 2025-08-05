@@ -14,12 +14,13 @@ async function addUser(name, email, password_hash) {
     password: hashedPassword,
     role: 'tenant' //default, can be changed to manager or admin
   };
-  user.push(user);
+  users.push(user);
   return user;
 }
 
 //find user by name (used by passport login)
 function findUserByName(name) {
+  console.log('[FIND USER] Comparing against users:', users);
   return users.find((u) => u.name === name);
 }
 

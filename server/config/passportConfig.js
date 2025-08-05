@@ -26,6 +26,6 @@ passport.serializeUser((user, done) => {
 //get full user object back from session
 passport.deserializeUser((id, done) => {
   const { users } = require('../models/uderModel');
-  const user  users.find(u => u.id === id);
+  const user = users.find(u => u.id === id);
   done(null, user || false);
 });

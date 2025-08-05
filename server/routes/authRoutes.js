@@ -2,15 +2,18 @@ const express = require('express');
 const passport = require('passport');
 const { addUser, findUserByName } = require('../models/userModel');
 
-const router = require('express').Router();
+const router = express.Router();
 
 //post /signup
 router.post('/signup', async (req, res) => {
+  console.log('[SIGNUP] Received body:', req.body);
   const { name, email, password_hash } = req.body;
 
   //chedck if username exists
   const existingUser = findUserByName(name);
   if (existingUser) {
+    console.log('[SIGNUP] Looking for name:', name);
+    console.log('[SIGNUP] Found:', existingUser);
     return res.status(409).json({ error: 'User already exists' });
   }
 
@@ -25,6 +28,7 @@ router.post('/signup', async (req, res) => {
     });
 
   } catch (err) {
+    console.error('[SIGNUP ERROR]', err);
     res.status(500).json({ error: 'Something went wrong' });
   }
 });

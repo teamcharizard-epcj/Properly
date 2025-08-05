@@ -18,21 +18,25 @@ export function SignUp() {
 
     (async () => {
       try {
-        const response = await fetch('/signup', {
+        const response = await fetch('http://localhost:4000/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(inputs),
+          credentials: 'include' //matches backend
         });
 
         if (!response.ok) {
           alert('Error: Email already exists');
           navigate('/signup');
         } else {
-          const { accessToken, refreshToken } = await response.json();
-          sessionStorage.setItem('accessToken', accessToken);
+          const data = await response.json();
+          console.log('Signed up successfully', data.user);
           navigate('/main');
+          // const { accessToken, refreshToken } = await response.json();
+          // sessionStorage.setItem('accessToken', accessToken);
+          // navigate('/main');
         }
       } catch (error) {
         console.log('Signup error: ', error);
