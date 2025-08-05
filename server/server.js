@@ -5,7 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes'); //build with pete
-// const { Pool } = require('pg'); const pool = new Pool({ connectionString: process.env.DATABASE_URL || 'postgresql://postgres:password@localhost:5432/properly' });
+// const { Pool } = require('pg'); const pool = new Pool({ connectionString: process.env.DATABASE_URL || 'postgresql://postgres@localhost:5432/properly' });
 require('./config/passportConfig');
 
 const app = express();

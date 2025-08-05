@@ -1,25 +1,26 @@
 const express = require('express');
 const passport = require('passport');
-const { addUser, findUserByName } = require('../models/userModel');
+const { users, properties, tasks } = require('../database/queries');
 
 const router = express.Router();
 
 //post /signup
 router.post('/signup', async (req, res) => {
   console.log('[SIGNUP] Received body:', req.body);
-  const { name, email, password_hash } = req.body;
+  const { username, email, password_hash } = req.body;
 
   //chedck if username exists
-  const existingUser = findUserByName(name);
+  const existingUser = users.findByUsername(username);
+  // const existingUser = await req.app.locals.db.query(queries.users.findByEmail, [email]);
   if (existingUser) {
-    console.log('[SIGNUP] Looking for name:', name);
+    console.log('[SIGNUP] Looking for name:', username);
     console.log('[SIGNUP] Found:', existingUser);
     return res.status(409).json({ error: 'User already exists' });
   }
 
   try {
     //add user to in memory store
-    const user = await addUser(name, email, password_hash);
+    const user = await users.create(username, email, password_hash);
 
     //log user in (create session)
     req.login(user, (err) => {
