@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -40,18 +40,26 @@ export function Login() {
   }
 
   return (
-    <div className="loginSignUp">
-      <img src="client/assets/properlyLogoH.svg" />
+    <div className='loginSignUp'>
+      <img className="logo" src='client/assets/properlyLogoH.svg' />
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Username</label>
-        <input id="name" name="name" type="text" onChange={handleChange}></input>
-        <label htmlFor="password_hash">Password</label>
-        <input id="password_hash" name="password_hash" type="password" onChange={handleChange}></input>
+        <label htmlFor='name'>Username</label>
+        <input
+          id='name'
+          name='name'
+          type='text'
+          onChange={handleChange}></input>
+        <label htmlFor='password_hash'>Password</label>
+        <input
+          id='password_hash'
+          name='password_hash'
+          type='password'
+          onChange={handleChange}></input>
         {/* <Link to="/main"> */}
-        <input type="submit" value="Login"></input>
+        <input type='submit' value='Login'></input>
         {/* </Link> */}
       </form>
-      <Link to="/signUp">
+      <Link to='/signUp'>
         <h4>Sign Up</h4>
       </Link>
     </div>

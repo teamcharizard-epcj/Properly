@@ -1,10 +1,10 @@
 :root {
-  --main-bg-color: hsl(39, 100%, 97%);
-  --primary-color: hsl(219, 69%, 53%);
-  --secondary-color: hsl(219, 81%, 29%);
-  --terciary-color: hsl(220, 72%, 37%);
+  --main-bg-color: hsl(40, 100%, 97%);
+  --primary-color: hsl(219, 68%, 53%);
+  --secondary-color: hsl(20, 79%, 54%);
+  --terciary-color: hsl(40, 20%, 90%);
   --text-light: hsl(60, 63%, 97%);
-  --text-dark: hsl(260, 95%, 26%);
+  --text-dark: hsl(219, 68%, 25%);
 }
 
 body {
@@ -16,16 +16,16 @@ body {
 }
 
 a {
-  color: var(--terciary-color);
+  color: var(--primary-color);
   text-decoration: none;
   font-size: large;
 }
 
 a:hover {
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
-a:active{
+a:active {
   color: var(--secondary-color);
 }
 
@@ -38,11 +38,11 @@ button {
 }
 
 button:hover {
-  background-color: var(--terciary-color);
+  background-color: var(--secondary-color);
   cursor: pointer;
 }
 
-button:active{
+button:active {
   background-color: var(--secondary-color);
 }
 
@@ -81,14 +81,9 @@ form input[type='submit']:active {
   background-color: var(--secondary-color);
 }
 
-
 form input[type='submit']:hover {
   background-color: var(--secondary-color);
   cursor: pointer;
-}
-
-img {
-  border-radius: 1rem;
 }
 
 .loginSignUp {
@@ -101,6 +96,11 @@ img {
   justify-content: center;
 }
 
+.loginSignUp .logo {
+  width: 30rem;
+  margin: 3rem;
+}
+
 .flexRow {
   display: flex;
   justify-content: space-between;
@@ -108,10 +108,22 @@ img {
 }
 
 .navbar {
-  background-color: var(--primary-color);
-  height: 3.5rem;
-  display: flex;
+  background-color: var(--terciary-color);
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: 2rem;
-  padding: 0rem 1rem;
+  margin:0.5rem;
+  padding:1rem 2rem;
+  border-radius: 1rem;
+
+}
+
+.navbar .logo{
+  height:2rem
+}
+
+#views{
+  display: flex;
+  gap:2rem
 }
