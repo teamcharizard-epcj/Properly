@@ -128,3 +128,26 @@ form input[type='submit']:hover {
   gap:2rem
 }
 
+.dataView{
+  width: 100%;
+}
+
+table {
+    margin: '1rem';
+    border-Radius: '8px';
+    overflow: 'hidden';
+    border: '1px solid #ccc';
+    border-Collapse: 'separate';
+    border-Spacing: 0
+}
+
+th{
+background-color: #deecf7;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  
+}
