@@ -28,7 +28,7 @@ export default function PropertyModal({ property, isOpen, onClose }) {
             ))}
           </div>
         </div>
-      <button>Delete Property</button>
+        <button>Delete Property</button>
       </div>
     </div>
   );

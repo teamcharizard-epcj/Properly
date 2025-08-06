@@ -39,29 +39,29 @@ export default function TaskView() {
   };
 
   return (
-    <div>
-      <table className='dataView'>
-        <thead>
-          <tr>
-            <th>Task</th>
-            <th>Property</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.properties.map((j) => {
-            return j.tasks.map((e) => {
-              return (
-                <tr key={e.id} onClick={() => setSelectedTask(e)}>
-                  <td>{e.name}</td>
-                  <td>{j.name}</td>
-                  <td>{e.status}</td>
-                </tr>
-              );
-            });
-          })}
-        </tbody>
-      </table>
+    <div className="dataWrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Property</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.properties.map((j) => {
+              return j.tasks.map((e) => {
+                return (
+                  <tr key={e.id} onClick={() => setSelectedTask(e)}>
+                    <td>{e.name}</td>
+                    <td>{j.name}</td>
+                    <td>{e.status}</td>
+                  </tr>
+                );
+              });
+            })}
+          </tbody>
+        </table>
       <button
         onClick={() => {
           setAddTaskBtn(true);

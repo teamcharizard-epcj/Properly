@@ -39,8 +39,8 @@ export default function PropertyView() {
   };
 
   return (
-    <div>
-      <table className='dataView'>
+    <div className="dataWrapper">
+      <table>
         <thead>
           <tr>
             <th>Property</th>

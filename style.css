@@ -23,6 +23,7 @@ a {
 
 a:hover {
   color: var(--secondary-color);
+  cursor: pointer;
 }
 
 a:active {
@@ -31,9 +32,10 @@ a:active {
 
 button {
   background-color: var(--primary-color);
+  padding: 0.5rem 1rem;
   color: var(--text-light);
   font-size: large;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   border: none;
 }
 
@@ -86,6 +88,10 @@ form input[type='submit']:hover {
   cursor: pointer;
 }
 
+textarea {
+  border: 1px solid var(--terciary-color);
+}
+
 .loginSignUp {
   width: 100%;
   height: 100vh;
@@ -99,12 +105,6 @@ form input[type='submit']:hover {
 .loginSignUp .logo {
   width: 30rem;
   margin: 3rem;
-}
-
-.flexRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .navbar {
@@ -127,28 +127,28 @@ form input[type='submit']:hover {
   gap: 2rem;
 }
 
-.dataView {
-  width: 100%;
+.dataWrapper {
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 table {
-  margin: '1rem';
-  border-radius: '8px';
-  overflow: 'hidden';
-  border: '1px solid #ccc';
-  border-collapse: 'separate';
-  border-spacing: 0;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 th {
   background-color: #deecf7;
+  height: 1.5rem;
 }
 
 td,
 th {
   border: 1px solid #dddddd;
   text-align: left;
-  padding: 8px;
+  padding: 0.5rem 1rem;
 }
 
 .modal-overlay {
@@ -174,6 +174,9 @@ th {
   overflow-y: auto;
   position: relative;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 textarea {
@@ -183,6 +186,20 @@ textarea {
   resize: none;
 }
 
-a:hover {
-  cursor: pointer;
+.toggleSwitch {
+  width: 3.5rem;
+  height: 2rem;
+  background-color: #a5a5a5;
+  border-radius: 1000rem;
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+}
+
+.switchKnob {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.2rem;
+  background-color: white;
+  border-radius: 1000rem;
 }

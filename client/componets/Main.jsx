@@ -1,7 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { NavBar } from './NavBar';
 import PropertyView from './PropertyView';
 import TaskView from './TaskView';
@@ -19,10 +17,10 @@ export function Main() {
   }
 
   return (
-    <>
+    <div className='main'>
       <NavBar changeView={handleChange} />
       {view === 'Property' && <PropertyView />}
       {view === 'Task' && <TaskView />}
-    </>
+    </div>
   );
 }
