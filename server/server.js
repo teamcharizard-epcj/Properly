@@ -34,7 +34,6 @@ app.use(passport.session());
 
 // Passport configuration
 passport.use(new LocalStrategy(
-  { usernameField: 'email' },
   async (email, password, done) => {
     try {
       const result = await pool.query(queries.users.findByEmail, [email]);
