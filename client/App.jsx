@@ -1,9 +1,9 @@
 import '../style.css';
 import React from "react";
-import { SignUp } from '../client/componets/SignUp'
-import { Login } from '../client/componets/Login';
+import { SignUp } from '../client/components/SignUp'
+import { Login } from '../client/components/Login';
 import { Routes, Route } from 'react-router-dom';
-import { Main } from './componets/Main';
+import { Main } from './components/Main';
 
 export function App() {
   return (
