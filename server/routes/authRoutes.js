@@ -1,57 +1,69 @@
-const express = require('express');
-const passport = require('passport');
-const { addUser, findUserByName } = require('../models/userModel');
+import express from 'express';
+import bcrypt from 'bcrypt';
+import passport from 'passport';
+import queries from '../database/queries.js';
 
 const router = express.Router();
 
-//post /signup
-router.post('/signup', async (req, res) => {
-  console.log('[SIGNUP] Received body:', req.body);
-  const { name, email, password_hash } = req.body;
-
-  //chedck if username exists
-  const existingUser = findUserByName(name);
-  if (existingUser) {
-    console.log('[SIGNUP] Looking for name:', name);
-    console.log('[SIGNUP] Found:', existingUser);
-    return res.status(409).json({ error: 'User already exists' });
-  }
-
+// Register
+router.post('/register', async (req, res) => {
   try {
-    //add user to in memory store
-    const user = await addUser(name, email, password_hash);
-
-    //log user in (create session)
-    req.login(user, (err) => {
-      if (err) return res.status(500).json({ error: 'Login failed after signup' });
-      return res.status(200).json({ message: 'Signed up and logged in', user });
-    });
-
-  } catch (err) {
-    console.error('[SIGNUP ERROR]', err);
-    res.status(500).json({ error: 'Something went wrong' });
+    const { username, email, password } = req.body;
+    
+    // Check if user already exists
+    const existingUser = await req.app.locals.db.query(queries.users.findByEmail, [email]);
+    if (existingUser.rows.length > 0) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+    
+    // Hash password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    
+    // Create user
+    const result = await req.app.locals.db.query(queries.users.create, [username, email, hashedPassword]);
+    const user = result.rows[0];
+    
+    res.status(201).json({ message: 'User created successfully', user });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-//POST /login
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) return res.status(500).json({ error: 'Server error during login' });
-    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+// Login
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/auth/success',
+  failureRedirect: '/auth/failure'
+}));
 
-    //log in (create session)
-    req.login(user, (err) => {
-      if (err) return res.status(500).json({ error: 'Login failed' });
-      return res.status(200).json({ message: 'Logged in successfully', user });
-    });
-  })(req, res, next);
+// Login success
+router.get('/success', (req, res) => {
+  res.json({ message: 'Login successful', user: req.user });
 });
 
-//get /logout
-router.get('/logout', (req, res) => {
-  req.logout(() => {
-    res.status(200).json({ message: 'Logged out' });
+// Login failure
+router.get('/failure', (req, res) => {
+  res.status(401).json({ error: 'Login failed' });
+});
+
+// Logout
+router.post('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Logout failed' });
+    }
+    res.json({ message: 'Logged out successfully' });
   });
 });
 
-module.exports = router;
+// Get current user
+router.get('/user', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ user: req.user });
+  } else {
+    res.status(401).json({ error: 'Not authenticated' });
+  }
+});
+
+export default router;
