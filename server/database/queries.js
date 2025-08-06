@@ -5,7 +5,7 @@ const queries = {
     create: 'INSERT INTO users (username, email, hashed_password) VALUES ($1, $2, $3) RETURNING id, username, email',
     findByEmail: 'SELECT * FROM users WHERE email = $1',
     findByUsername: 'SELECT * FROM users WHERE username = $1',
-    findById: 'SELECT id, username, email FROM users WHERE id = $1',
+    findById: 'SELECT * FROM users WHERE id = $1',
     findAll: 'SELECT id, username, email FROM users ORDER BY id DESC'
   },
 

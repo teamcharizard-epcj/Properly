@@ -51,13 +51,18 @@ app.use(passport.session());
 passport.use(new LocalStrategy(
   async (username, password, done) => {
     try {
+      console.log('Login attempt:', { username, password: '***' }); // Debug log
       const result = await pool.query(queries.users.findByUsername, [username]);
+      console.log('Database result:', result.rows); // Debug log
+      
       if (result.rows.length === 0) {
         return done(null, false, { message: 'Invalid credentials' });
       }
       
       const user = result.rows[0];
+      console.log('Stored hash:', user.hashed_password); // Debug log
       const isValid = await bcrypt.compare(password, user.hashed_password);
+      console.log('Password valid:', isValid); // Debug log
       
       if (isValid) {
         return done(null, { id: user.id, username: user.username, email: user.email });
@@ -65,6 +70,7 @@ passport.use(new LocalStrategy(
         return done(null, false, { message: 'Invalid credentials' });
       }
     } catch (error) {
+      console.error('Passport error:', error); // Debug log
       return done(error);
     }
   }
