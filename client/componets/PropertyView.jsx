@@ -2,15 +2,17 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Modal from './Modal'
+import PropertyModal from './PropertyModal';
+import AddPropertyModal from './AddPropertyModal';
 
-
-export default function DataView() {
+export default function PropertyView() {
   const [selectedProperty, setSelectedProperty] = useState(null);
+  const [addPropertyBtn, setAddPropertyBtn] = useState(null);
 
   const handleModalClose = () => {
-  setSelectedProperty(null);
-};
+    setSelectedProperty(null);
+    setAddPropertyBtn(null);
+  };
 
   const data = {
     properties: [
@@ -30,7 +32,7 @@ export default function DataView() {
         tasks: [
           { id: 0, name: 'Replace Air Filter', status: 'Pending' },
           { id: 1, name: 'Close Crawlspace Vents', status: 'Pending' },
-          { id: 1, name: 'Pest Prevention', status: 'Pending' },
+          { id: 2, name: 'Pest Prevention', status: 'Pending' },
         ],
       },
     ],
@@ -38,7 +40,7 @@ export default function DataView() {
 
   return (
     <div>
-      <table className="dataView">
+      <table className='dataView'>
         <thead>
           <tr>
             <th>Property</th>
@@ -48,25 +50,32 @@ export default function DataView() {
         </thead>
         <tbody>
           {data.properties.map((e) => {
-            return(<tr key={e.id}>
-             <td> <button onClick={() => setSelectedProperty(e)}>
-                 
-              {e.name}
-               </button>
-               </td>
-
-              <td>{e.address}</td>
-              <td>{e.tasks.length}</td>
-            </tr>)
+            return (
+              <tr key={e.id} onClick={() => setSelectedProperty(e)}>
+                <td>{e.name}</td>
+                <td>{e.address}</td>
+                <td>{e.tasks.length}</td>
+              </tr>
+            );
           })}
         </tbody>
       </table>
-        <Modal
+      <button
+        onClick={() => {
+          setAddPropertyBtn(true);
+        }}>
+        Add Property
+      </button>
+      <PropertyModal
         property={selectedProperty}
         isOpen={selectedProperty}
         onClose={handleModalClose}
       />
-
+      <AddPropertyModal
+        task={addPropertyBtn}
+        isOpen={addPropertyBtn}
+        onClose={handleModalClose}
+      />
     </div>
   );
 }
