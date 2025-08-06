@@ -5,13 +5,28 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcrypt';
 import pkg from 'pg';
 const { Pool } = pkg;
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cors from 'cors';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+
+app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../')));
+
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true
+}));
 
 import queries from './database/queries.js';
 import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 
-const app = express();
 
 // PostgreSQL connection
 const pool = new Pool({
@@ -34,9 +49,9 @@ app.use(passport.session());
 
 // Passport configuration
 passport.use(new LocalStrategy(
-  async (email, password, done) => {
+  async (username, password, done) => {
     try {
-      const result = await pool.query(queries.users.findByEmail, [email]);
+      const result = await pool.query(queries.users.findByUsername, [username]);
       if (result.rows.length === 0) {
         return done(null, false, { message: 'Invalid credentials' });
       }
