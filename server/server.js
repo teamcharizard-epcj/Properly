@@ -1,43 +1,89 @@
-require('dotenv').config();
+import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import bcrypt from 'bcrypt';
+import pkg from 'pg';
+const { Pool } = pkg;
 
-const express = require('express');
-const session = require('express-session');
-const passport = require('passport');
-const cors = require('cors');
-const authRoutes = require('./routes/authRoutes'); //build with pete
-// const { Pool } = require('pg'); const pool = new Pool({ connectionString: process.env.DATABASE_URL || 'postgresql://postgres@localhost:5432/properly' });
-require('./config/passportConfig');
+import queries from './database/queries.js';
+import authRoutes from './routes/authRoutes.js';
+import propertyRoutes from './routes/propertyRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
 
 const app = express();
 
-//!middleware
-//frontend requests (3000)
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true //allow cookies/session
-}));
+// PostgreSQL connection
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || 'postgresql://localhost:5432/properly-db'
+});
 
-// parse incoming json
+// Make pool available to routes
+app.locals.db = pool;
+
+// Middleware
 app.use(express.json());
-
-//session set up
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: false, //true in production with https
-    httpOnly: true
-  }
+  saveUninitialized: false
 }));
-
-// passport setup
 app.use(passport.initialize());
 app.use(passport.session());
 
-// mount routes
-app.use('/', authRoutes); // /signup, /login
+// Passport configuration
+passport.use(new LocalStrategy(
+  { usernameField: 'email' },
+  async (email, password, done) => {
+    try {
+      const result = await pool.query(queries.users.findByEmail, [email]);
+      if (result.rows.length === 0) {
+        return done(null, false, { message: 'Invalid credentials' });
+      }
+      
+      const user = result.rows[0];
+      const isValid = await bcrypt.compare(password, user.hashed_password);
+      
+      if (isValid) {
+        return done(null, { id: user.id, username: user.username, email: user.email });
+      } else {
+        return done(null, false, { message: 'Invalid credentials' });
+      }
+    } catch (error) {
+      return done(error);
+    }
+  }
+));
 
-// start server
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const result = await pool.query(queries.users.findById, [id]);
+    if (result.rows.length > 0) {
+      done(null, result.rows[0]);
+    } else {
+      done(null, false);
+    }
+  } catch (error) {
+    done(error);
+  }
+});
+
+// Routes
+app.use('/authRoutes', authRoutes);
+app.use('/propertyRoutes', propertyRoutes);
+app.use('/taskRoutes', taskRoutes);
+
+// Basic route
+app.get('/', (req, res) => {
+  res.json({ message: 'Property Management!' });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
