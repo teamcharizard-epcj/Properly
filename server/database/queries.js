@@ -11,7 +11,7 @@ const queries = {
 
   // Property queries
   properties: {
-    create: 'INSERT INTO properties (user_id, property_name) VALUES ($1, $2) RETURNING *',
+    create: 'INSERT INTO properties (user_id, property_name, address) VALUES ($1, $2, $3) RETURNING *',
     findById: 'SELECT * FROM properties WHERE id = $1',
     findByUserId: 'SELECT * FROM properties WHERE user_id = $1 ORDER BY id DESC',
     findAll: 'SELECT p.*, u.username FROM properties p JOIN users u ON p.user_id = u.id ORDER BY p.id DESC',
