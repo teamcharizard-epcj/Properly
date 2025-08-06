@@ -5,13 +5,13 @@ const queries = {
     create: 'INSERT INTO users (username, email, hashed_password) VALUES ($1, $2, $3) RETURNING id, username, email',
     findByEmail: 'SELECT * FROM users WHERE email = $1',
     findByUsername: 'SELECT * FROM users WHERE username = $1',
-    findById: 'SELECT id, username, email FROM users WHERE id = $1',
+    findById: 'SELECT * FROM users WHERE id = $1',
     findAll: 'SELECT id, username, email FROM users ORDER BY id DESC'
   },
 
   // Property queries
   properties: {
-    create: 'INSERT INTO properties (user_id, property_name) VALUES ($1, $2) RETURNING *',
+    create: 'INSERT INTO properties (user_id, property_name, address) VALUES ($1, $2, $3) RETURNING *',
     findById: 'SELECT * FROM properties WHERE id = $1',
     findByUserId: 'SELECT * FROM properties WHERE user_id = $1 ORDER BY id DESC',
     findAll: 'SELECT p.*, u.username FROM properties p JOIN users u ON p.user_id = u.id ORDER BY p.id DESC',

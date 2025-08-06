@@ -18,7 +18,7 @@ export function SignUp() {
 
     (async () => {
       try {
-        const response = await fetch('http://localhost:4000/signup', {
+        const response = await fetch('http://localhost:3000/authRoutes/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -50,12 +50,12 @@ export function SignUp() {
     <div className="loginSignUp">
       <img className="logo" src='client/assets/properlyLogoH.svg' />
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Username</label>
-        <input id="name" name="name" type="text" onChange={handleChange}></input>
+        <label htmlFor="username">Username</label>
+        <input id="username" name="username" type="text" onChange={handleChange}></input>
         <label htmlFor="email">Email</label>
         <input id="email" name="email" type="text" onChange={handleChange}></input>
-        <label htmlFor="password_hash">Password</label>
-        <input id="password_hash" name="password_hash" type="password" onChange={handleChange}></input>
+        <label htmlFor="password">Password</label>
+        <input id="password" name="password" type="password" onChange={handleChange}></input>
         {/* <Link to="/main"> */}
         <input type="submit" value="Sign Up"></input>
         {/* </Link> */}

@@ -41,11 +41,11 @@ router.get('/:id', isAuthenticated, async (req, res) => {
 // Create new property
 router.post('/', isAuthenticated, async (req, res) => {
   try {
-    const { property_name } = req.body;
+    const { property_name, address } = req.body;
     
     const result = await req.app.locals.db.query(
       queries.properties.create, 
-      [req.user.id, property_name]
+      [req.user.id, property_name, address]
     );
     
     res.status(201).json(result.rows[0]);
