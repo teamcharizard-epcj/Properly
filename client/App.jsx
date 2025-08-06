@@ -4,7 +4,7 @@ import { SignUp } from '../client/components/SignUp'
 import { Login } from '../client/components/Login';
 import { Routes, Route } from 'react-router-dom';
 import { Main } from './components/Main';
-import { Main } from './components/Main';
+
 
 export function App() {
   return (
