@@ -10,6 +10,8 @@ export function Main() {
     <>
       <NavBar></NavBar>
       <DataView></DataView>
+      
+      
     </>
   );
 }

@@ -2,8 +2,16 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Modal from './Modal'
+
 
 export default function DataView() {
+  const [selectedProperty, setSelectedProperty] = useState(null);
+
+  const handleModalClose = () => {
+  setSelectedProperty(null);
+};
+
   const data = {
     properties: [
       {
@@ -40,14 +48,25 @@ export default function DataView() {
         </thead>
         <tbody>
           {data.properties.map((e) => {
-            return(<tr>
-              <td>{e.name}</td>
+            return(<tr key={e.id}>
+             <td> <button onClick={() => setSelectedProperty(e)}>
+                 
+              {e.name}
+               </button>
+               </td>
+
               <td>{e.address}</td>
               <td>{e.tasks.length}</td>
             </tr>)
           })}
         </tbody>
       </table>
+        <Modal
+        property={selectedProperty}
+        isOpen={selectedProperty}
+        onClose={handleModalClose}
+      />
+
     </div>
   );
 }
