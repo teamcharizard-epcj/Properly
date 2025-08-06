@@ -5,32 +5,6 @@ import queries from '../database/queries.js';
 
 const router = express.Router();
 
-// Register
-// router.post('/register', async (req, res) => {
-//   try {
-//     const { username, email, password } = req.body;
-    
-//     // Check if user already exists
-//     const existingUser = await req.app.locals.db.query(queries.users.findByEmail, [email]);
-//     if (existingUser.rows.length > 0) {
-//       return res.status(400).json({ error: 'User already exists' });
-//     }
-    
-//     // Hash password
-//     const saltRounds = 10;
-//     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    
-//     // Create user
-//     const result = await req.app.locals.db.query(queries.users.create, [username, email, hashedPassword]);
-//     const user = result.rows[0];
-    
-//     res.status(201).json({ message: 'User created successfully', user });
-//   } catch (error) {
-//     console.error('Registration error:', error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
-
 // register new user with logs
 router.post('/register', async (req, res) => {
   try {

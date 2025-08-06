@@ -49,9 +49,9 @@ app.use(passport.session());
 
 // Passport configuration
 passport.use(new LocalStrategy(
-  async (email, password, done) => {
+  async (username, password, done) => {
     try {
-      const result = await pool.query(queries.users.findByEmail, [email]);
+      const result = await pool.query(queries.users.findByUsername, [username]);
       if (result.rows.length === 0) {
         return done(null, false, { message: 'Invalid credentials' });
       }
