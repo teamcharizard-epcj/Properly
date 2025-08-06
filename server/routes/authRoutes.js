@@ -33,8 +33,8 @@ router.post('/register', async (req, res) => {
 
 // Login
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/api/auth/success',
-  failureRedirect: '/api/auth/failure'
+  successRedirect: '/auth/success',
+  failureRedirect: '/auth/failure'
 }));
 
 // Login success
