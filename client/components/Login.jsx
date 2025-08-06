@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import TestRegister from './testRegister';
 
 export function Login() {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export function Login() {
 
   return (
     <div className='loginSignUp'>
+      <TestRegister></TestRegister>
       <img className="logo" src='client/assets/properlyLogoH.svg' />
       <form onSubmit={handleSubmit}>
         <label htmlFor='name'>Username</label>
